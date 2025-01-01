@@ -8,6 +8,8 @@ from app.services.file_converter import convert_file
 
 router = APIRouter()
 
+test_router = APIRouter()
+
 
 @router.post("/convert-to-markdown/")
 async def convert(uploaded_file: UploadFile = File(...)):
@@ -33,3 +35,7 @@ async def convert(uploaded_file: UploadFile = File(...)):
         # Clean up the temporary file after processing
         if os.path.exists(file_location):
             os.remove(file_location)
+
+@test_router.get("/test-only")
+async def test_only_endpoint():
+    return {"message": "This is a test-only endpoint"}
