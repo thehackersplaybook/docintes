@@ -4,7 +4,6 @@ import pytest
 
 from app.api.convert import test_router
 from fastapi import FastAPI, Request, HTTPException
-from app.main import app
 from httpx import ASGITransport
 from httpx import AsyncClient
 from app.ratelimit.rlmiddleware import RateLimitMiddleware
@@ -12,9 +11,10 @@ from app.ratelimit.rlmiddleware import RateLimitMiddleware
 
 @pytest.mark.asyncio
 async def test_rate_limit():
-    transport = ASGITransport(app=app)  # Use ASGITransport to wrap the FastAPI app
-    app.router = test_router
-    app.add_middleware(RateLimitMiddleware, max_requests=5, period=60)
+    test_app = FastAPI()
+    test_app.add_middleware(RateLimitMiddleware, max_requests=5, period=60)
+    transport = ASGITransport(app=test_app)  # Use ASGITransport to wrap the FastAPI app
+    test_app.router = test_router
     async with AsyncClient(transport=transport, base_url="http://testserver") as client:
         for _ in range(5):
             response = await client.get("/test-only")

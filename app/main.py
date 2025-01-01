@@ -6,12 +6,14 @@ import logging
 
 app = FastAPI(title="File Converter API")
 
+app.add_middleware(RateLimitMiddleware, max_requests=5, period=60)
+
 # Include the router from the convert module
 app.include_router(convert.router)
 # Apply the ratelimit with a limit of 10 requests per minute
 logging.info("Adding Middleware")
 # Add the RateLimitMiddleware with desired max_requests and period
-app.add_middleware(RateLimitMiddleware, max_requests=5, period=60)
+
 
 # Only include the test router in test mode
 import os

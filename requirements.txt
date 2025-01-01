@@ -4,3 +4,4 @@ markitdown
 python-multipart
 locust
 pytest
+pytest-asyncio
