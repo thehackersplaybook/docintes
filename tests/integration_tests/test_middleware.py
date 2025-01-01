@@ -1,11 +1,8 @@
-import os
-
 import pytest
+from fastapi import FastAPI, HTTPException
+from httpx import ASGITransport, AsyncClient
 
 from app.api.convert import test_router
-from fastapi import FastAPI, Request, HTTPException
-from httpx import ASGITransport
-from httpx import AsyncClient
 from app.ratelimit.rlmiddleware import RateLimitMiddleware
 
 

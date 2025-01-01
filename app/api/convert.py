@@ -1,9 +1,8 @@
 # api/convert.py
 import os
 
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, File, HTTPException, UploadFile
 
-from app.models.file_models import FileConversionResponse
 from app.services.file_converter import convert_file
 
 router = APIRouter()
@@ -35,6 +34,7 @@ async def convert(uploaded_file: UploadFile = File(...)):
         # Clean up the temporary file after processing
         if os.path.exists(file_location):
             os.remove(file_location)
+
 
 @test_router.get("/test-only")
 async def test_only_endpoint():

@@ -1,6 +1,6 @@
 # services/file_converter.py
-import os
 import logging
+import os
 
 from markitdown import MarkItDown
 
@@ -36,5 +36,3 @@ def convert_file(file_path: str) -> dict[str, str]:
         return {"status": "success", "markdown": markdown_content.text_content}
     except Exception as e:
         raise Exception(f"Error during file conversion: {str(e)}")
-
-

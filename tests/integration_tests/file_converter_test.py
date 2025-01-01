@@ -1,7 +1,8 @@
 import pytest
-from httpx import AsyncClient
+from httpx import ASGITransport, AsyncClient
+
 from app.main import app  # Replace with your actual module name
-from httpx import ASGITransport
+
 
 @pytest.mark.asyncio
 async def test_convert_file_for_valid_file():
@@ -9,9 +10,15 @@ async def test_convert_file_for_valid_file():
     # Create a test client
     async with AsyncClient(transport=transport, base_url="http://testserver") as client:
         # Simulate a file upload with valid content
-        file_content = b"This is a sample text content for conversion."  # Content must be bytes
+        file_content = (
+            b"This is a sample text content for conversion."  # Content must be bytes
+        )
         file_data = {
-            "uploaded_file": ("test.txt", file_content, "text/plain")  # Filename, content, and MIME type
+            "uploaded_file": (
+                "test.txt",
+                file_content,
+                "text/plain",
+            )  # Filename, content, and MIME type
         }
         # Make a POST request to the /convert endpoint
         response = await client.post("/convert-to-markdown/", files=file_data)

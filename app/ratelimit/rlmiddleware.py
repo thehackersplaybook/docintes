@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Request, HTTPException
-from starlette.middleware.base import BaseHTTPMiddleware
-from time import time
 import logging
+from time import time
+
+from fastapi import HTTPException, Request
+from starlette.middleware.base import BaseHTTPMiddleware
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("middle_ware")
@@ -25,7 +26,8 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         else:
             # Remove timestamps older than the rate limit period
             self.clients[client_ip] = [
-                timestamp for timestamp in self.clients[client_ip]
+                timestamp
+                for timestamp in self.clients[client_ip]
                 if current_time - timestamp < self.period
             ]
 

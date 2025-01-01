@@ -1,8 +1,11 @@
 # main.py
+import logging
+import os
+
 from fastapi import FastAPI
+
 from app.api import convert  # Import the routes from convert.py
 from app.ratelimit.rlmiddleware import RateLimitMiddleware
-import logging
 
 app = FastAPI(title="File Converter API")
 
@@ -16,6 +19,6 @@ logging.info("Adding Middleware")
 
 
 # Only include the test router in test mode
-import os
+
 if os.getenv("TEST_ENV", "false").lower() == "true":
     app.include_router(convert.test_router)
