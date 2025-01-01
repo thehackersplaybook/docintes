@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+markitdown
+python-multipart
+locust
+pytest
+pytest-asyncio
+black
+flake8
